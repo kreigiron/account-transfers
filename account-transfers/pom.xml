@@ -48,6 +48,23 @@
             <artifactId>javax.transaction-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>6.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.197</version>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.integrations.cdi</groupId>
+            <artifactId>helidon-integrations-cdi-datasource-hikaricp</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -86,6 +103,22 @@
                         <id>make-index</id>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>6.2.3</version>
+                <configuration>
+                    <url>jdbc:h2:file:./target/foobar</url>
+                    <user>sa</user>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>1.4.197</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
