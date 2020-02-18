@@ -18,13 +18,14 @@ import org.eclipse.microprofile.openapi.annotations.servers.Server;
 @ApplicationScoped
 @ApplicationPath("/v1/transfers")
 @OpenAPIDefinition(info = @Info(
-        title = "Transfers application",
+        title = "Account transfers application",
         version = "1.0.0",
         contact = @Contact(
                 name = "Erik Giron")
 ),
         servers = {
-                @Server(url = "/v1/transfers",description = "localhost")
+                @Server(url = "/v1/transfers",
+                        description = "localhost")
         }
 )
 public class TransferV1Application extends Application {

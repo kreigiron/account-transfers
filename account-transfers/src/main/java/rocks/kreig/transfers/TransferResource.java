@@ -24,7 +24,7 @@ import java.util.Optional;
 @Path("/transfer")
 @Tag(name = "Transfer resource", description = "Create transfer and check transfer statuses")
 public class TransferResource {
-    private TransferService transferService;
+    private final TransferService transferService;
 
     @Inject
     public TransferResource( final TransferService transferService) {
