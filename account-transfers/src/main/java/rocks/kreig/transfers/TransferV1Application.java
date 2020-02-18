@@ -7,12 +7,26 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import io.helidon.common.CollectionsHelper;
+import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
+import org.eclipse.microprofile.openapi.annotations.info.Contact;
+import org.eclipse.microprofile.openapi.annotations.info.Info;
+import org.eclipse.microprofile.openapi.annotations.servers.Server;
 
 /**
  * Transfers application
  */
 @ApplicationScoped
-@ApplicationPath("/v1")
+@ApplicationPath("/v1/transfers")
+@OpenAPIDefinition(info = @Info(
+        title = "Transfers application",
+        version = "1.0.0",
+        contact = @Contact(
+                name = "Erik Giron")
+),
+        servers = {
+                @Server(url = "/v1/transfers",description = "localhost")
+        }
+)
 public class TransferV1Application extends Application {
 
     @Override

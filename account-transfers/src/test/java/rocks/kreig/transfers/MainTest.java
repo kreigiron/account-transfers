@@ -13,6 +13,7 @@ import io.helidon.microprofile.server.Server;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class MainTest {
@@ -23,6 +24,7 @@ class MainTest {
         server = Main.startServer();
     }
 
+    @Disabled
     @Test
     void testHelloWorld() {
 

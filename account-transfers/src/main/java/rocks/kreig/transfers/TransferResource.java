@@ -1,5 +1,11 @@
 package rocks.kreig.transfers;
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import rocks.kreig.transfers.resource.Transfer;
 import rocks.kreig.transfers.resource.TransferStatus;
 import rocks.kreig.transfers.service.TransferService;
@@ -16,6 +22,7 @@ import javax.ws.rs.core.UriBuilder;
 import java.util.Optional;
 
 @Path("/transfer")
+@Tag(name = "Transfer resource", description = "Create transfer and check transfer statuses")
 public class TransferResource {
     private TransferService transferService;
 
@@ -26,6 +33,17 @@ public class TransferResource {
 
     @GET
     @Path("{id}")
+    @Operation(summary = "Retrieves transfer status", description = "Retrieves transfer status by id")
+    @APIResponses({
+            @APIResponse(
+            description = "a transfer status",
+            responseCode = "200",
+            content = @Content(
+                    mediaType = MediaType.APPLICATION_JSON,
+                    schema = @Schema(implementation = TransferStatus.class))),
+            @APIResponse(
+                    description = "Transfer not found",
+                    responseCode = "404")})
     @Produces(MediaType.APPLICATION_JSON)
     public Response transferStatus(@PathParam("id") final long id) {
         final Optional<TransferStatus> transferStatus = transferService.status(id);

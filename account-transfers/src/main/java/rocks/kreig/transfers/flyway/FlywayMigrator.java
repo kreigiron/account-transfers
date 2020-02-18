@@ -10,6 +10,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
+
 /**
  * Startup database schema migrator
  * */
