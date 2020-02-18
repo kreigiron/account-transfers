@@ -9,14 +9,14 @@ import javax.ws.rs.core.Application;
 import io.helidon.common.CollectionsHelper;
 
 /**
- * Simple Application that produces a greeting message.
+ * Transfers application
  */
 @ApplicationScoped
-@ApplicationPath("/")
-public class GreetApplication extends Application {
+@ApplicationPath("/v1")
+public class TransferV1Application extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return CollectionsHelper.setOf(GreetResource.class);
+        return CollectionsHelper.setOf(TransferResource.class);
     }
 }

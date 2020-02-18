@@ -15,13 +15,13 @@ public class TransferService {
     final TransferRepository transferRepository;
 
     @Inject
-    public TransferService(final TransferRepository transferRepository) {
+    public TransferService(@Named("h2TransferRepository") final TransferRepository transferRepository) {
         this.transferRepository = transferRepository;
     }
 
 
     public Optional<TransferStatus> status(final long id) {
-        final Optional<Transfer> transfer = transferRepository.get(id);
+        final Optional<Transfer> transfer = transferRepository.findById(id);
 
         return transfer.map(Transfer::getStatus);
     }

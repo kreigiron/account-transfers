@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.util.Optional;
 
-@Path("/v1/transfer")
+@Path("/transfer")
 public class TransferResource {
     private TransferService transferService;
 

@@ -9,14 +9,14 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-@Named
+@Named("inMemoryTransferRepository")
 @ApplicationScoped
 public class InMemoryTransferRepository implements TransferRepository {
 
     private ConcurrentMap<Long, Transfer> transferConcurrentMap = new ConcurrentHashMap<>();
 
     @Override
-    public Optional<Transfer> get(final long id) {
+    public Optional<Transfer> findById(final long id) {
         return Optional.empty();
     }
 
