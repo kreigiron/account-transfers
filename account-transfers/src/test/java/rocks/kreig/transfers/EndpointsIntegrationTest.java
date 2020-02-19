@@ -89,7 +89,7 @@ public class EndpointsIntegrationTest {
         final Transfer transfer = new Transfer(null, originAccount, destinationAccount, amount, null);
 
         final Response response = client
-                .target(getConnectionString("/v1/transfers/account/5"))
+                .target(getConnectionString("/v1/transfers/transfer"))
                 .request()
                 .post(Entity.entity(transfer, MediaType.APPLICATION_JSON_TYPE));
 
