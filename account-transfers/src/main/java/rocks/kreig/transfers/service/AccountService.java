@@ -20,16 +20,12 @@ public class AccountService {
     }
 
     public Optional<Account> findById(final long id) {
-        final rocks.kreig.transfers.repository.entity.Account account = accountRepository.findById(id);
+        final Optional<rocks.kreig.transfers.repository.entity.Account> account = accountRepository.findById(id);
 
         return transform(account);
     }
 
-    private Optional<Account> transform(final rocks.kreig.transfers.repository.entity.Account account) {
-        if (account == null) {
-            return Optional.empty();
-        }
-
-        return Optional.of(new Account(account.getId(), account.getName(), account.getNumber(), account.getBalance()));
+    private Optional<Account> transform(final Optional<rocks.kreig.transfers.repository.entity.Account> accountOptional) {
+        return accountOptional.map(account -> new Account(account.getId(), account.getName(), account.getNumber(), account.getBalance()));
     }
 }

@@ -18,7 +18,11 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import rocks.kreig.transfers.resource.Account;
 
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.Response.Status.OK;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class MainTest {
     private static Server server;
@@ -37,12 +41,28 @@ class MainTest {
     @Test
     void testAccountEndpoint() {
 
-        final JsonObject jsonObject = client
+        final Response response = client
                 .target(getConnectionString("/v1/transfers/account/1"))
                 .request()
-                .get(JsonObject.class);
+                .get();
 
-        assertNotNull(jsonObject);
+        assertEquals(response.getStatus(), OK.getStatusCode());
+        assertNotNull(response.getEntity());
+
+        final Account account = response.readEntity(Account.class);
+
+        assertEquals(account.getId(), 1);
+    }
+
+    @Test
+    void testAccountEndpoint_notFound() {
+
+        final Response response = client
+                .target(getConnectionString("/v1/transfers/account/5"))
+                .request()
+                .get();
+
+        assertEquals(response.getStatus(), NOT_FOUND.getStatusCode());
 
     }
 
