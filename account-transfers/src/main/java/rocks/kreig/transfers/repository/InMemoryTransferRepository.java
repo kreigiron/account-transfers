@@ -3,6 +3,7 @@ package rocks.kreig.transfers.repository;
 import rocks.kreig.transfers.resource.Transfer;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.ApplicationPath;
 import java.util.Optional;
@@ -12,7 +13,6 @@ import java.util.concurrent.ConcurrentMap;
 @Named("inMemoryTransferRepository")
 @ApplicationScoped
 public class InMemoryTransferRepository implements TransferRepository {
-
     private ConcurrentMap<Long, Transfer> transferConcurrentMap = new ConcurrentHashMap<>();
 
     @Override

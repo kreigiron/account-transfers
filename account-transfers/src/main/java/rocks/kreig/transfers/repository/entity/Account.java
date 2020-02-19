@@ -4,16 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-public class Account {
+@NamedQuery(name = "findById", query = "SELECT a from Account a where a.id = :id")
+public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String number;
-    private BigDecimal amount;
+
+    private BigDecimal balance;
 
     public long getId() {
         return id;
@@ -39,11 +43,12 @@ public class Account {
         this.number = number;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setAmount(final BigDecimal amount) {
-        this.amount = amount;
+    public void setBalance(final BigDecimal balance) {
+        this.balance = balance;
     }
+
 }

@@ -32,6 +32,6 @@ public class TransferV1Application extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return CollectionsHelper.setOf(TransferResource.class);
+        return CollectionsHelper.setOf(TransferResource.class, AccountResource.class);
     }
 }

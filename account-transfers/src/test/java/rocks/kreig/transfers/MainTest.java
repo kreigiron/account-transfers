@@ -13,51 +13,42 @@ import io.helidon.microprofile.server.Server;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import rocks.kreig.transfers.resource.Account;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class MainTest {
     private static Server server;
+    private Client client;
 
     @BeforeAll
     public static void startTheServer() throws Exception {
         server = Main.startServer();
     }
 
-    @Disabled
+    @BeforeEach
+    public void init() {
+        client = ClientBuilder.newClient();
+    }
+
     @Test
-    void testHelloWorld() {
+    void testAccountEndpoint() {
 
-        Client client = ClientBuilder.newClient();
-
-        JsonObject jsonObject = client
-                .target(getConnectionString("/greet"))
+        final JsonObject jsonObject = client
+                .target(getConnectionString("/v1/transfers/account/1"))
                 .request()
                 .get(JsonObject.class);
-        Assertions.assertEquals("Hello World!", jsonObject.getString("message"),
-                "default message");
 
-        jsonObject = client
-                .target(getConnectionString("/greet/Joe"))
-                .request()
-                .get(JsonObject.class);
-        Assertions.assertEquals("Hello Joe!", jsonObject.getString("message"),
-                "hello Joe message");
+        assertNotNull(jsonObject);
 
+    }
+
+    @Test
+    public void testObservability() {
         Response r = client
-                .target(getConnectionString("/greet/greeting"))
-                .request()
-                .put(Entity.entity("{\"greeting\" : \"Hola\"}", MediaType.APPLICATION_JSON));
-        Assertions.assertEquals(204, r.getStatus(), "PUT status code");
-
-        jsonObject = client
-                .target(getConnectionString("/greet/Jose"))
-                .request()
-                .get(JsonObject.class);
-        Assertions.assertEquals("Hola Jose!", jsonObject.getString("message"),
-                "hola Jose message");
-
-        r = client
                 .target(getConnectionString("/metrics"))
                 .request()
                 .get();

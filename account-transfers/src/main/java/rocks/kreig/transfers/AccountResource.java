@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 
 @Path("/account")
 @RequestScoped
@@ -30,15 +31,23 @@ public class AccountResource {
     @Path("{id}")
     @Operation(summary = "Get an account by id")
     @APIResponses({
-            @APIResponse(
-                    description = "An account",
-                    responseCode = "200",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Account.class))
-            )
+                          @APIResponse(
+                                  description = "An account",
+                                  responseCode = "200",
+                                  content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = Account.class))
+                          ),
+                          @APIResponse(
+                                  description = "No account found",
+                                  responseCode = "404"
+                          )
 
-    })
+                  })
     public Response account(@PathParam("id") final long id) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
+        final Optional<Account> accountOptional = accountService.findById(id);
 
+        if (accountOptional.isPresent()) {
+            return Response.ok(accountOptional.get()).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
 }
