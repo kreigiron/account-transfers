@@ -17,14 +17,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import rocks.kreig.transfers.resource.Account;
+import rocks.kreig.transfers.resource.Money;
+import rocks.kreig.transfers.resource.Status;
+import rocks.kreig.transfers.resource.Transfer;
 
+import java.math.BigDecimal;
+
+import static javax.ws.rs.core.Response.Status.CREATED;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-class MainTest {
+public class EndpointsIntegrationTest {
     private static Server server;
     private Client client;
 
@@ -51,7 +57,7 @@ class MainTest {
 
         final Account account = response.readEntity(Account.class);
 
-        assertEquals(account.getId(), 1);
+        assertEquals((long) account.getId(), 1L);
     }
 
     @Test
@@ -63,6 +69,43 @@ class MainTest {
                 .get();
 
         assertEquals(response.getStatus(), NOT_FOUND.getStatusCode());
+
+    }
+
+    @Test
+    void testTransferEndpoint() {
+        final String senderAccountNumber = "11111111";
+        final String receiverAccountNumber = "22222222";
+
+        final Account originAccount = new Account(null, null, senderAccountNumber , null);
+        final Account destinationAccount = new Account(null, null, receiverAccountNumber, null);
+
+        final BigDecimal originalSenderAmount = BigDecimal.valueOf(50.00);
+        final BigDecimal originalReceiverAmount = BigDecimal.valueOf(100.00);
+        final BigDecimal transferAmount = BigDecimal.valueOf(50.00);
+
+        final Money amount = new Money("USD", transferAmount);
+
+        final Transfer transfer = new Transfer(null, originAccount, destinationAccount, amount, null);
+
+        final Response response = client
+                .target(getConnectionString("/v1/transfers/account/5"))
+                .request()
+                .post(Entity.entity(transfer, MediaType.APPLICATION_JSON_TYPE));
+
+        assertEquals(response.getStatus(), OK.getStatusCode());
+        assertNotNull(response.getEntity());
+
+        final Transfer createdTransfer = response.readEntity(Transfer.class);
+
+        assertNotNull(createdTransfer.getStatus());
+        assertEquals(createdTransfer.getStatus().getStatus(), Status.COMPLETED);
+
+        assertEquals(createdTransfer.getOrigin().getNumber(), senderAccountNumber);
+        assertEquals(createdTransfer.getDestination().getNumber(), receiverAccountNumber);
+
+        assertEquals(createdTransfer.getOrigin().getBalance(), originalSenderAmount.subtract(transferAmount));
+        assertEquals(createdTransfer.getDestination().getBalance(), originalReceiverAmount.add(transferAmount));
 
     }
 

@@ -62,8 +62,7 @@ public class TransferResource {
         final Optional<Transfer> createdTransfer = transferService.transfer(transfer);
 
         if(createdTransfer.isPresent()) {
-            final long transferId = createdTransfer.get().getId();
-            return Response.created(UriBuilder.fromResource(this.getClass()).path(String.valueOf(transferId)).build()).build();
+            return Response.ok(createdTransfer.get()).build();
         }
 
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Unable to create resource").build();

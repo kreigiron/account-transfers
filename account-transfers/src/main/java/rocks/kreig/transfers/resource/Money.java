@@ -1,13 +1,17 @@
 package rocks.kreig.transfers.resource;
 
+import javax.json.bind.annotation.JsonbCreator;
+import javax.json.bind.annotation.JsonbProperty;
 import java.math.BigDecimal;
 
 public class Money {
-    final String currencyCode;
+    final String currency;
     final BigDecimal amount;
 
-    public Money(final String currencyCode, final BigDecimal amount) {
-        this.currencyCode = currencyCode;
+    @JsonbCreator
+    public Money(@JsonbProperty("currency") final String currency,
+                 @JsonbProperty("amount") final BigDecimal amount) {
+        this.currency = currency;
         this.amount = amount;
     }
 }

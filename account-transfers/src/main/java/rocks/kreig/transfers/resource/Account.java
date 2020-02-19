@@ -6,13 +6,13 @@ import java.math.BigDecimal;
 
 public class Account {
 
-    private final long id;
+    private final Long id;
     private final String name;
     private final String number;
     private final BigDecimal balance;
 
     @JsonbCreator
-    public Account(@JsonbProperty("id") final long id,
+    public Account(@JsonbProperty("id") final Long id,
                    @JsonbProperty("name")final String name,
                    @JsonbProperty("number")final String number,
                    @JsonbProperty("balance") final BigDecimal balance) {
@@ -22,7 +22,7 @@ public class Account {
         this.balance = balance;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
