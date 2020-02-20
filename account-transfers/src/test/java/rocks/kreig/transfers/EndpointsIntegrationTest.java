@@ -111,8 +111,6 @@ public class EndpointsIntegrationTest {
         final Account originAccount = new Account(null, null, senderAccountNumber, null);
         final Account destinationAccount = new Account(null, null, receiverAccountNumber, null);
 
-        final BigDecimal originalSenderAmount = BigDecimal.valueOf(50.00);
-        final BigDecimal originalReceiverAmount = BigDecimal.valueOf(100.00);
         final BigDecimal amount = BigDecimal.valueOf(51.00);
 
         final Transfer transfer = new Transfer(null, originAccount, destinationAccount, amount, null);
