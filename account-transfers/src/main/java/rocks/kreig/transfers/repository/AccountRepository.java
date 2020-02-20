@@ -21,4 +21,10 @@ public class AccountRepository {
 
         return accountTypedQuery.setParameter("id", id).getResultStream().findFirst();
     }
+
+    public Optional<Account> findByNumber(final String number) {
+        final TypedQuery<Account> accountTypedQuery = entityManager.createNamedQuery("findByNumber", Account.class);
+
+        return accountTypedQuery.setParameter("number", number).getResultStream().findFirst();
+    }
 }

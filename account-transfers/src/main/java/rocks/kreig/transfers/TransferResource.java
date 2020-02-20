@@ -27,7 +27,7 @@ public class TransferResource {
     private final TransferService transferService;
 
     @Inject
-    public TransferResource( final TransferService transferService) {
+    public TransferResource(final TransferService transferService) {
         this.transferService = transferService;
     }
 
@@ -35,15 +35,15 @@ public class TransferResource {
     @Path("{id}")
     @Operation(summary = "Retrieves transfer status", description = "Retrieves transfer status by id")
     @APIResponses({
-            @APIResponse(
-            description = "a transfer status",
-            responseCode = "200",
-            content = @Content(
-                    mediaType = MediaType.APPLICATION_JSON,
-                    schema = @Schema(implementation = TransferStatus.class))),
-            @APIResponse(
-                    description = "Transfer not found",
-                    responseCode = "404")})
+                          @APIResponse(
+                                  description = "a transfer status",
+                                  responseCode = "200",
+                                  content = @Content(
+                                          mediaType = MediaType.APPLICATION_JSON,
+                                          schema = @Schema(implementation = TransferStatus.class))),
+                          @APIResponse(
+                                  description = "Transfer not found",
+                                  responseCode = "404")})
     @Produces(MediaType.APPLICATION_JSON)
     public Response transferStatus(@PathParam("id") final long id) {
         final Optional<TransferStatus> transferStatus = transferService.status(id);
@@ -61,11 +61,10 @@ public class TransferResource {
 
         final Optional<Transfer> createdTransfer = transferService.transfer(transfer);
 
-        if(createdTransfer.isPresent()) {
+        if (createdTransfer.isPresent()) {
             return Response.ok(createdTransfer.get()).build();
         }
-
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Unable to create resource").build();
+        return Response.status(Response.Status.NO_CONTENT.getStatusCode(), "Unable to create resource").build();
     }
 
 }

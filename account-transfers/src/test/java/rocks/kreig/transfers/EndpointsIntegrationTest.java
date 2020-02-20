@@ -2,7 +2,6 @@ package rocks.kreig.transfers;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.spi.CDI;
-import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -14,16 +13,13 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import rocks.kreig.transfers.resource.Account;
-import rocks.kreig.transfers.resource.Money;
 import rocks.kreig.transfers.resource.Status;
 import rocks.kreig.transfers.resource.Transfer;
 
 import java.math.BigDecimal;
 
-import static javax.ws.rs.core.Response.Status.CREATED;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -82,9 +78,7 @@ public class EndpointsIntegrationTest {
 
         final BigDecimal originalSenderAmount = BigDecimal.valueOf(50.00);
         final BigDecimal originalReceiverAmount = BigDecimal.valueOf(100.00);
-        final BigDecimal transferAmount = BigDecimal.valueOf(50.00);
-
-        final Money amount = new Money("USD", transferAmount);
+        final BigDecimal amount = BigDecimal.valueOf(50.00);
 
         final Transfer transfer = new Transfer(null, originAccount, destinationAccount, amount, null);
 
@@ -104,8 +98,8 @@ public class EndpointsIntegrationTest {
         assertEquals(createdTransfer.getOrigin().getNumber(), senderAccountNumber);
         assertEquals(createdTransfer.getDestination().getNumber(), receiverAccountNumber);
 
-        assertEquals(createdTransfer.getOrigin().getBalance(), originalSenderAmount.subtract(transferAmount));
-        assertEquals(createdTransfer.getDestination().getBalance(), originalReceiverAmount.add(transferAmount));
+        assertEquals(createdTransfer.getOrigin().getBalance(), originalSenderAmount.subtract(amount));
+        assertEquals(createdTransfer.getDestination().getBalance(), originalReceiverAmount.add(amount));
 
     }
 

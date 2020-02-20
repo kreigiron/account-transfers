@@ -2,12 +2,12 @@ package rocks.kreig.transfers.resource;
 
 import javax.json.bind.annotation.JsonbCreator;
 import javax.json.bind.annotation.JsonbProperty;
+import java.math.BigDecimal;
 
 public class Transfer {
     @JsonbProperty("id")
     private Long id;
 
-    // TODO add javax validation constraints
     @JsonbProperty("origin")
     private Account origin;
 
@@ -15,7 +15,7 @@ public class Transfer {
     private Account destination;
 
     @JsonbProperty("amount")
-    private Money amount;
+    private BigDecimal amount;
 
     @JsonbProperty("status")
     private TransferStatus status;
@@ -24,7 +24,7 @@ public class Transfer {
     public Transfer(final Long id,
                     final Account origin,
                     final Account destination,
-                    final Money amount,
+                    final BigDecimal amount,
                     final TransferStatus status) {
         this.id = id;
         this.origin = origin;
@@ -48,7 +48,7 @@ public class Transfer {
         return destination;
     }
 
-    public Money getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
@@ -68,7 +68,7 @@ public class Transfer {
         this.destination = destination;
     }
 
-    public void setAmount(final Money amount) {
+    public void setAmount(final BigDecimal amount) {
         this.amount = amount;
     }
 

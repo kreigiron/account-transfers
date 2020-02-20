@@ -1,6 +1,6 @@
 package rocks.kreig.transfers.repository;
 
-import rocks.kreig.transfers.resource.Transfer;
+import rocks.kreig.transfers.repository.entity.Transfer;
 
 import java.util.Optional;
 

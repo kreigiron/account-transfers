@@ -15,3 +15,4 @@ create table transfer (
     status_reason varchar(256) null
 );
 
+create index accountnumberidx on account(number);

@@ -25,12 +25,27 @@ public class Transfer {
 
     private BigDecimal amount;
 
-    private String currency;
-
     @Enumerated(EnumType.STRING)
     private Status status;
 
     private String statusReason;
+
+    public Transfer() {
+
+    }
+
+    private Transfer(final Builder builder) {
+        setId(builder.id);
+        setOriginAccount(builder.originAccount);
+        setDestinationAccoutn(builder.destinationAccoutn);
+        setAmount(builder.amount);
+        setStatus(builder.status);
+        setStatusReason(builder.statusReason);
+    }
+
+    public static Builder aTransfer() {
+        return new Builder();
+    }
 
     public long getId() {
         return id;
@@ -64,14 +79,6 @@ public class Transfer {
         this.amount = amount;
     }
 
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(final String currency) {
-        this.currency = currency;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -86,5 +93,51 @@ public class Transfer {
 
     public void setStatusReason(final String statusReason) {
         this.statusReason = statusReason;
+    }
+
+    public static final class Builder {
+        private long id;
+        private Account originAccount;
+        private Account destinationAccoutn;
+        private BigDecimal amount;
+        private Status status;
+        private String statusReason;
+
+        private Builder() {
+        }
+
+        public Builder withId(final long val) {
+            id = val;
+            return this;
+        }
+
+        public Builder withOriginAccount(final Account val) {
+            originAccount = val;
+            return this;
+        }
+
+        public Builder withDestinationAccoutn(final Account val) {
+            destinationAccoutn = val;
+            return this;
+        }
+
+        public Builder withAmount(final BigDecimal val) {
+            amount = val;
+            return this;
+        }
+
+        public Builder withStatus(final Status val) {
+            status = val;
+            return this;
+        }
+
+        public Builder withStatusReason(final String val) {
+            statusReason = val;
+            return this;
+        }
+
+        public Transfer build() {
+            return new Transfer(this);
+        }
     }
 }
