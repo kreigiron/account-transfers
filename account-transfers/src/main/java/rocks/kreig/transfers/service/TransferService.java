@@ -48,7 +48,7 @@ public class TransferService {
 
     private rocks.kreig.transfers.repository.entity.Transfer operate(final rocks.kreig.transfers.repository.entity.Transfer transfer) {
         transfer.setStatus(Status.IN_PROGRESS);
-        
+
         debit(transfer.getOriginAccount(), transfer.getAmount());
         credit(transfer.getDestinationAccount(), transfer.getAmount());
 

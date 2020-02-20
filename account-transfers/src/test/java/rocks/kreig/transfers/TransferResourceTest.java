@@ -2,7 +2,6 @@ package rocks.kreig.transfers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import rocks.kreig.transfers.TransferResource;
 import rocks.kreig.transfers.resource.Status;
 import rocks.kreig.transfers.resource.TransferStatus;
 import rocks.kreig.transfers.service.TransferService;
