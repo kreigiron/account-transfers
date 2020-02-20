@@ -8,7 +8,7 @@ Microservice to make money transfers between accounts using Helidon + Jakarta EE
 
 ## Build and run
 
-With JDK11+
+With JDK11+ and maven 3.5+
 ```bash
 cd account-transfers
 mvn clean package
