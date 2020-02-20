@@ -4,12 +4,13 @@ import rocks.kreig.transfers.repository.AccountRepository;
 import rocks.kreig.transfers.resource.Account;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Optional;
 
 @Named
-@ApplicationScoped
+@RequestScoped
 public class AccountService {
 
     final AccountRepository accountRepository;

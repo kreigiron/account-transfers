@@ -9,6 +9,7 @@ import rocks.kreig.transfers.resource.Transfer;
 import rocks.kreig.transfers.resource.TransferStatus;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.math.BigDecimal;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import static rocks.kreig.transfers.repository.entity.Transfer.aTransfer;
 
 @Named
-@ApplicationScoped
+@RequestScoped
 public class TransferService {
     final TransferRepository transferRepository;
     final AccountRepository accountRepository;

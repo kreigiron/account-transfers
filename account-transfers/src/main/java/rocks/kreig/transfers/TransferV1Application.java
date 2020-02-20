@@ -11,6 +11,7 @@ import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.info.Contact;
 import org.eclipse.microprofile.openapi.annotations.info.Info;
 import org.eclipse.microprofile.openapi.annotations.servers.Server;
+import rocks.kreig.transfers.exception.mapper.RuntimeExceptionMapper;
 
 /**
  * Transfers application
@@ -32,6 +33,9 @@ public class TransferV1Application extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return CollectionsHelper.setOf(TransferResource.class, AccountResource.class);
+        return CollectionsHelper.setOf(
+                TransferResource.class,
+                AccountResource.class,
+                RuntimeExceptionMapper.class);
     }
 }
