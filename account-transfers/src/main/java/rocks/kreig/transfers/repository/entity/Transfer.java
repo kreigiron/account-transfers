@@ -14,14 +14,14 @@ import java.math.BigDecimal;
 @Entity
 public class Transfer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne
     private Account originAccount;
 
     @OneToOne
-    private Account destinationAccoutn;
+    private Account destinationAccount;
 
     private BigDecimal amount;
 
@@ -37,7 +37,7 @@ public class Transfer {
     private Transfer(final Builder builder) {
         setId(builder.id);
         setOriginAccount(builder.originAccount);
-        setDestinationAccoutn(builder.destinationAccoutn);
+        setDestinationAccount(builder.destinationAccoutn);
         setAmount(builder.amount);
         setStatus(builder.status);
         setStatusReason(builder.statusReason);
@@ -63,12 +63,12 @@ public class Transfer {
         this.originAccount = originAccount;
     }
 
-    public Account getDestinationAccoutn() {
-        return destinationAccoutn;
+    public Account getDestinationAccount() {
+        return destinationAccount;
     }
 
-    public void setDestinationAccoutn(final Account destinationAccoutn) {
-        this.destinationAccoutn = destinationAccoutn;
+    public void setDestinationAccount(final Account destinationAccoutn) {
+        this.destinationAccount = destinationAccoutn;
     }
 
     public BigDecimal getAmount() {

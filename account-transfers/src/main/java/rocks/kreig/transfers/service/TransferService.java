@@ -8,10 +8,10 @@ import rocks.kreig.transfers.resource.Status;
 import rocks.kreig.transfers.resource.Transfer;
 import rocks.kreig.transfers.resource.TransferStatus;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -24,7 +24,7 @@ public class TransferService {
     final AccountRepository accountRepository;
 
     @Inject
-    public TransferService(@Named("h2TransferRepository") final TransferRepository transferRepository, final AccountRepository accountRepository) {
+    public TransferService(final TransferRepository transferRepository, final AccountRepository accountRepository) {
         this.transferRepository = transferRepository;
         this.accountRepository = accountRepository;
     }
@@ -36,16 +36,32 @@ public class TransferService {
         throw new UnsupportedOperationException("Not implemented");
     }
 
+    @Transactional
     public Optional<Transfer> transfer(final Transfer transfer) {
         validateTransferResource(transfer);
 
         final rocks.kreig.transfers.repository.entity.Transfer transferEntity = transform(transfer);
         final Optional<rocks.kreig.transfers.repository.entity.Transfer> createdTransfer = transferRepository.create(transferEntity);
 
-        if (createdTransfer.isPresent()) {
-            return transform(createdTransfer.get());
-        }
-        return Optional.empty();
+        return createdTransfer.map(this::operate).flatMap(this::transform);
+    }
+
+    private rocks.kreig.transfers.repository.entity.Transfer operate(final rocks.kreig.transfers.repository.entity.Transfer transfer) {
+        transfer.setStatus(Status.IN_PROGRESS);
+        
+        debit(transfer.getOriginAccount(), transfer.getAmount());
+        credit(transfer.getDestinationAccount(), transfer.getAmount());
+
+        transfer.setStatus(Status.COMPLETED);
+        return transfer;
+    }
+
+    private void credit(final Account account, final BigDecimal amount) {
+        account.setBalance(account.getBalance().add(amount));
+    }
+
+    private void debit(final Account account, final BigDecimal amount) {
+        account.setBalance(account.getBalance().subtract(amount));
     }
 
     // TODO delegate transformers into collaborators
@@ -54,10 +70,10 @@ public class TransferService {
                                                                                                          transfer.getOriginAccount().getName(),
                                                                                                          transfer.getOriginAccount().getNumber(),
                                                                                                          transfer.getOriginAccount().getBalance());
-        final rocks.kreig.transfers.resource.Account destination = new rocks.kreig.transfers.resource.Account(transfer.getDestinationAccoutn().getId(),
-                                                                                                              transfer.getDestinationAccoutn().getName(),
-                                                                                                              transfer.getDestinationAccoutn().getNumber(),
-                                                                                                              transfer.getDestinationAccoutn().getBalance());
+        final rocks.kreig.transfers.resource.Account destination = new rocks.kreig.transfers.resource.Account(transfer.getDestinationAccount().getId(),
+                                                                                                              transfer.getDestinationAccount().getName(),
+                                                                                                              transfer.getDestinationAccount().getNumber(),
+                                                                                                              transfer.getDestinationAccount().getBalance());
         final TransferStatus transferStatus = new TransferStatus(transfer.getStatus(), transfer.getStatusReason());
 
         return Optional.of(new Transfer(transfer.getId(), origin, destination, transfer.getAmount(), transferStatus));
@@ -78,7 +94,7 @@ public class TransferService {
     }
 
     private void validateFunds(final Account account, final BigDecimal amount) {
-        Assert.state(account.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) < 0, "Insufficient funds in origination account.");
+        Assert.state(account.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) >= 0, "Insufficient funds in origination account.");
     }
 
     private void validateTransferResource(final Transfer transfer) {

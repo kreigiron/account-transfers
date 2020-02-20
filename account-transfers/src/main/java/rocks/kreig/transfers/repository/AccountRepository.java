@@ -11,20 +11,19 @@ import java.util.Optional;
 
 @Named
 @ApplicationScoped
-public class AccountRepository {
+public class AccountRepository extends Repository<Account> {
 
     @PersistenceContext(unitName = "transfer")
     private EntityManager entityManager;
-
-    public Optional<Account> findById(final long id) {
-        final TypedQuery<Account> accountTypedQuery = entityManager.createNamedQuery("findById", Account.class);
-
-        return accountTypedQuery.setParameter("id", id).getResultStream().findFirst();
-    }
 
     public Optional<Account> findByNumber(final String number) {
         final TypedQuery<Account> accountTypedQuery = entityManager.createNamedQuery("findByNumber", Account.class);
 
         return accountTypedQuery.setParameter("number", number).getResultStream().findFirst();
+    }
+
+    @Override
+    protected Class<Account> getEntityClass() {
+        return Account.class;
     }
 }
