@@ -12,7 +12,8 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 
 /**
- * Startup database schema migrator
+ * Database schema migrator at application initialization
+ *
  * */
 @ApplicationScoped
 public class FlywayMigrator {

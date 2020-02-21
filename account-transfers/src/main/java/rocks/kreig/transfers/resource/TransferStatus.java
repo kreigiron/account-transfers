@@ -2,6 +2,9 @@ package rocks.kreig.transfers.resource;
 
 import javax.json.bind.annotation.JsonbProperty;
 
+/**
+ * Transfer status resource transfer object
+ */
 public class TransferStatus {
 
     @JsonbProperty("status")

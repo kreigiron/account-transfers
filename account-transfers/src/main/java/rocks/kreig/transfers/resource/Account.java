@@ -3,6 +3,9 @@ package rocks.kreig.transfers.resource;
 import javax.json.bind.annotation.JsonbProperty;
 import java.math.BigDecimal;
 
+/**
+ * Account resource transfer object
+ */
 public class Account {
 
     @JsonbProperty("id")

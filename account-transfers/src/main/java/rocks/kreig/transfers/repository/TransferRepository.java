@@ -10,6 +10,10 @@ import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 import java.util.Optional;
 
+
+/**
+ * Repository object for Transfer entity operations
+ */
 @Named("h2TransferRepository")
 @ApplicationScoped
 public class TransferRepository extends Repository<Transfer> {

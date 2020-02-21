@@ -10,6 +10,7 @@ import rocks.kreig.transfers.resource.Transfer;
 import rocks.kreig.transfers.resource.TransferStatus;
 import rocks.kreig.transfers.service.TransferService;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -21,8 +22,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.util.Optional;
 
+/**
+ * Endpoint controller for transfer resource
+ */
 @Path("/transfer")
 @Tag(name = "Transfer resource", description = "Create transfer and check transfer statuses")
+@RequestScoped
 public class TransferResource {
     private final TransferService transferService;
 

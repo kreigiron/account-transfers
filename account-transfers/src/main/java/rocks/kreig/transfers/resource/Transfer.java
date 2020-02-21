@@ -1,9 +1,11 @@
 package rocks.kreig.transfers.resource;
 
-import javax.json.bind.annotation.JsonbCreator;
 import javax.json.bind.annotation.JsonbProperty;
 import java.math.BigDecimal;
 
+/**
+ * Transfers resource transfer object
+ */
 public class Transfer {
     @JsonbProperty("id")
     private Long id;

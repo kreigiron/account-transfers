@@ -17,6 +17,9 @@ import java.util.Optional;
 
 import static rocks.kreig.transfers.repository.entity.Transfer.aTransfer;
 
+/**
+ * Service for transfer operations
+ */
 @Named
 @RequestScoped
 public class TransferService {
@@ -30,9 +33,6 @@ public class TransferService {
     }
 
     public Optional<TransferStatus> status(final long id) {
-        // final Optional<rocks.kreig.transfers.repository.entity.Transfer> transfer = transferRepository.findById(id);
-
-        //  return transfer.map(Transfer::getStatus);
         throw new UnsupportedOperationException("Not implemented");
     }
 

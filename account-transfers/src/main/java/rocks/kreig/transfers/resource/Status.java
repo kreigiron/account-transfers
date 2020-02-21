@@ -1,5 +1,8 @@
 package rocks.kreig.transfers.resource;
 
+/**
+ * Valid transfer statuses enumeration
+ */
 public enum Status {
 
     INITIATED(0),

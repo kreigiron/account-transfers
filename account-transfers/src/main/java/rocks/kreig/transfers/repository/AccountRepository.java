@@ -9,6 +9,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Optional;
 
+/**
+ * Repository object for account entity operations
+ */
 @Named
 @ApplicationScoped
 public class AccountRepository extends Repository<Account> {

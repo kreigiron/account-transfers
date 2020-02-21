@@ -7,6 +7,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+/**
+ * Exception mapper to http responses for common RuntimeExceptions
+ */
 @Provider
 public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException> {
 

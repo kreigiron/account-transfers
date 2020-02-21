@@ -5,6 +5,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import rocks.kreig.transfers.resource.Account;
 import rocks.kreig.transfers.service.AccountService;
 
@@ -17,8 +18,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
 
+/**
+ * Endpoint controller for account
+ */
 @Path("/account")
 @RequestScoped
+@Tag(name = "Account resource", description = "Account endpoints")
 public class AccountResource {
     private final AccountService accountService;
 

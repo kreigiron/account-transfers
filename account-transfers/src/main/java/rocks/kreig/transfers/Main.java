@@ -7,7 +7,7 @@ import java.util.logging.LogManager;
 import io.helidon.microprofile.server.Server;
 
 /**
- * The application main class.
+ * The application entry point.
  */
 public final class Main {
 
@@ -36,9 +36,6 @@ public final class Main {
      * @return the created {@link Server} instance
      */
     static Server startServer() {
-        // Server will automatically pick up configuration from
-        // microprofile-config.properties
-        // and Application classes annotated as @ApplicationScoped
         return Server.create().start();
     }
 

@@ -6,6 +6,10 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+/**
+ * Abstract repository for entities
+ * @param <T> Entity for repository operations
+ */
 public abstract class Repository<T> {
     @PersistenceContext(unitName = "transfer")
     private EntityManager entityManager;

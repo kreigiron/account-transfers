@@ -14,7 +14,7 @@ import org.eclipse.microprofile.openapi.annotations.servers.Server;
 import rocks.kreig.transfers.exception.mapper.RuntimeExceptionMapper;
 
 /**
- * Transfers application
+ * Transfers application v1 resource aggregator
  */
 @ApplicationScoped
 @ApplicationPath("/v1/transfers")

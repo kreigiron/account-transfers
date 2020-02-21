@@ -9,6 +9,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Optional;
 
+/**
+ * Service for account operations
+ */
 @Named
 @RequestScoped
 public class AccountService {
