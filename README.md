@@ -1,10 +1,6 @@
 # account-transfers
 
-(c) 2020 Erik Giron
-
-## Description
-
-Microservice to make money transfers between accounts using Helidon + Jakarta EE. Used only for educational and training purposes
+POC for a microservice to make money transfers between accounts, using Helidon MicroProfile.
 
 ## Build and run
 
@@ -33,9 +29,6 @@ We expose the following endpoints:
 #### transfers
 
 * POST /v1/transfers/transfer : make a transfer between accounts specified in the payload:
-
-
-More information about the endpoints can be found in openapi at http://localhost:8080/openapi (Swagger yet to be implemented)
 
 
 ### Example
