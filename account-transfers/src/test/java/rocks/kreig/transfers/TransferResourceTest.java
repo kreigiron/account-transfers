@@ -2,11 +2,14 @@ package rocks.kreig.transfers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import rocks.kreig.transfers.resource.Account;
 import rocks.kreig.transfers.resource.Status;
+import rocks.kreig.transfers.resource.Transfer;
 import rocks.kreig.transfers.resource.TransferStatus;
 import rocks.kreig.transfers.service.TransferService;
 
 import javax.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -29,42 +32,40 @@ class TransferResourceTest {
     }
 
     @Test
-    void testTransferStatus() {
+    void testTransferResource() {
 
-        final long id = 0;
-        final Optional<TransferStatus> transferStatus = Optional.of(new TransferStatus(Status.INITIATED, "SOME REASON"));
+        final Long id = 1L;
+        final Optional<Transfer> transfer = Optional.of(new Transfer(id, new Account(), new Account(), BigDecimal.ZERO, new TransferStatus()));
 
-        given(transferService.status(id)).willReturn(transferStatus);
+        given(transferService.transfer(transfer.get())).willReturn(transfer);
 
-        final Response response = transferResource.transferStatus(id);
+        final Response response = transferResource.transfer(transfer.get());
 
-        then(transferService).should().status(id);
+        then(transferService).should().transfer(transfer.get());
 
         assertAll("response",
                 () -> assertNotNull(response.getEntity()),
-                () -> assertEquals(response.getStatus(), Response.Status.OK.getStatusCode()));
-
+                () -> assertEquals(Response.Status.OK.getStatusCode(), response.getStatus()),
+                () -> assertEquals(id, ((Transfer) response.getEntity()).getId()));
 
     }
 
     @Test
     void testTransferStatusNotFound() {
-        final long id = 0;
-        final Optional<TransferStatus> transferStatus = Optional.empty();
 
-        given(transferService.status(id)).willReturn(transferStatus);
+        final Long id = 1L;
+        final Transfer transfer = new Transfer();
+        final Optional<Transfer> empty = Optional.empty();
+        given(transferService.transfer(transfer)).willReturn(empty);
 
-        final Response response = transferResource.transferStatus(id);
+        final Response response = transferResource.transfer(transfer);
 
-        then(transferService).should().status(id);
+        then(transferService).should().transfer(transfer);
 
         assertAll("response",
                 () -> assertNull(response.getEntity()),
-                () -> assertEquals(response.getStatus(), Response.Status.NOT_FOUND.getStatusCode()));
+                () -> assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus()));
 
     }
 
-    @Test
-    void testTransfer() {
-    }
 }

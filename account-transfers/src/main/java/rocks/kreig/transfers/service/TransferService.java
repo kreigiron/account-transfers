@@ -32,10 +32,6 @@ public class TransferService {
         this.accountRepository = accountRepository;
     }
 
-    public Optional<TransferStatus> status(final long id) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
     @Transactional
     public Optional<Transfer> transfer(final Transfer transfer) {
         validateTransferResource(transfer);

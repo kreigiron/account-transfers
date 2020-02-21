@@ -36,30 +36,6 @@ public class TransferResource {
         this.transferService = transferService;
     }
 
-    @GET
-    @Path("{id}")
-    @Operation(summary = "Retrieves transfer status", description = "Retrieves transfer status by id")
-    @APIResponses({
-                          @APIResponse(
-                                  description = "a transfer status",
-                                  responseCode = "200",
-                                  content = @Content(
-                                          mediaType = MediaType.APPLICATION_JSON,
-                                          schema = @Schema(implementation = TransferStatus.class))),
-                          @APIResponse(
-                                  description = "Transfer not found",
-                                  responseCode = "404")})
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response transferStatus(@PathParam("id") final long id) {
-        final Optional<TransferStatus> transferStatus = transferService.status(id);
-
-        if (transferStatus.isPresent()) {
-            return Response.ok(transferStatus).build();
-        }
-
-        return Response.status(Response.Status.NOT_FOUND).build();
-    }
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response transfer(final Transfer transfer) {
