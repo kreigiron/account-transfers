@@ -126,7 +126,6 @@ public class EndpointsIntegrationTest {
         assertTrue(message.contains("Insufficient funds in origination account."));
     }
 
-
     @Test
     public void testObservability() {
         Response r = client
