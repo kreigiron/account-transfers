@@ -13,6 +13,8 @@
     <groupId>rocks.kreig.backend</groupId>
     <artifactId>account-transfers</artifactId>
     <name>${project.artifactId}</name>
+    <version>1.0-SNAPSHOT</version>
+
 
     <properties>
         <mainClass>rocks.kreig.transfers.Main</mainClass>
